@@ -1,0 +1,80 @@
+name: Frontend Continuous Integration
+
+on:
+  # Automatic trigger on pull request events targeting the main branch
+  # only when code in frontend folder changes
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'starter/frontend/**'
+  # Manual trigger using the workflow_dispatch event
+  workflow_dispatch:
+
+env:
+  # Set Node.js Version
+  NODE_VERSION: '18.14'
+
+defaults:
+  run:
+    working-directory: ./starter/frontend
+
+# Jobs defined in the workflow
+jobs:
+  # linting job
+  lint:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{env.NODE_VERSION}}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+      
+  # test job    
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{env.NODE_VERSION}}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: CI=true npm test
+
+# build job
+  build: 
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with: 
+          node-version: ${{env.NODE_VERSION}}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Build
+        run: npm run build
