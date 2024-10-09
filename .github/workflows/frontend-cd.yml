@@ -135,8 +135,10 @@ jobs:
         env:
           ECR_REGISTRY: ${{ needs.build.outputs['login-ecr.outputs.registry'] }}
           ECR_REPOSITORY: frontend
+        working-directory: ./starter/frontend/k8s
         run: |
           aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME
           cd k8s
           kustomize edit set image frontend=$ECR_REGISTRY/$ECR_REPOSITORY:${GITHUB_SHA::7}
           kustomize build | kubectl apply -f -
+          
