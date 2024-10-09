@@ -101,7 +101,6 @@ jobs:
     needs: [build]  # The deploy job will only run after the build job completes successfully
     env:
       EKS_CLUSTER_NAME: 'cluster'
-      AWS_REGION: ${{env.AWS_REGION}}
 
     steps:
       - name: Configure AWS credentials

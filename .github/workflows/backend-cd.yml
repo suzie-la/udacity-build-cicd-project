@@ -97,7 +97,6 @@ jobs:
     
     env:
       EKS_CLUSTER_NAME: 'cluster'
-      AWS_REGION: ${{env.AWS_REGION}}
 
     steps:
       - name: Configure AWS credentials
