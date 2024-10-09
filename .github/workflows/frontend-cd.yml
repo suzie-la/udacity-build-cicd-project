@@ -11,6 +11,7 @@ on:
 env:
   # Set Node.js Version
   NODE_VERSION: '18.14'
+  AWS_REGION: us-east-1
 
 defaults:
   run:
@@ -77,7 +78,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -100,7 +101,7 @@ jobs:
     needs: [build]  # The deploy job will only run after the build job completes successfully
     env:
       EKS_CLUSTER_NAME: 'cluster'
-      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_REGION: ${{ env.AWS_REGION }}
 
     steps:
       - name: Configure AWS credentials
@@ -108,7 +109,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Install kustomize
         uses: imranismail/setup-kustomize@v2
