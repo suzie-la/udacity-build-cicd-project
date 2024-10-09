@@ -34,6 +34,13 @@ jobs:
       - name: Install pipenv
         run: pip install pipenv
 
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.local/share/virtualenvs
+          key: deps-python-${{ hashFiles('**/Pipfile.lock') }}
+
       - name: Install dependencies
         run: pipenv install --dev
 
@@ -53,6 +60,13 @@ jobs:
 
       - name: Install pipenv
         run: pip install pipenv
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.local/share/virtualenvs
+          key: deps-python-${{ hashFiles('**/Pipfile.lock') }}
 
       - name: Install dependencies
         run: pipenv install --dev
