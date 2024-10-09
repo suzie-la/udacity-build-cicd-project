@@ -11,7 +11,7 @@ on:
 env:
   # Set Node.js Version
   NODE_VERSION: '18.14'
-  AWS_REGION: us-east-1
+  AWS_REGION: 'us-east-1'
 
 defaults:
   run:

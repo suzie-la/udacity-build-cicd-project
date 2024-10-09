@@ -14,7 +14,7 @@ on:
 env:
   # Set Node.js Version
   PYTHON_VERSION: '3.10'
-  AWS_REGION: us-east-1
+  AWS_REGION: 'us-east-1'
 
 defaults:
   run:
